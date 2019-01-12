@@ -1,6 +1,7 @@
 import * as restify from 'restify'
 import {Router} from '../common/router'
 import {User} from './users.model'
+import { NotFoundError } from 'restify-errors';
 
 class UsersRouter extends Router {
     constructor() {
@@ -14,17 +15,20 @@ class UsersRouter extends Router {
         application.get('/users', (request, response, next) => {
             User.find()
                 .then(this.render(response, next))
+                .catch(next)
         })
 
         application.get('/users/:id', (request, response, next) => {
             User.findById(request.params.id)
                 .then(this.render(response, next))
+                .catch(next)
         })
 
         application.post('/users', (request, response, next) => {
             let user: User = new User(request.body)
             user.save()
                 .then(this.render(response, next))
+                .catch(next)
         })
 
         application.put('/users/:id', (request, response, next) => {
@@ -40,12 +44,14 @@ class UsersRouter extends Router {
                     }
                 })
                 .then(this.render(response, next))
+                .catch(next)
         })
 
         application.patch('/users/:id', (request, response, next) => {
             const options = {new: true}
             User.findByIdAndUpdate(request.params.id, request.body, options)
                 .then(this.render(response, next))
+                .catch(next)
         })
 
         application.del('/users/:id', (request, response, next) => {
@@ -55,10 +61,11 @@ class UsersRouter extends Router {
                     if(cmdResult.result.n) {
                         response.send(204)
                     } else {
-                        response.send(404)
+                        throw new NotFoundError('Documento não encontrado')
                     }
                     return next()
                 })
+                .catch(next)
         })
     }
 }
