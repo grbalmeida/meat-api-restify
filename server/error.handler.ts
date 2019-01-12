@@ -15,6 +15,16 @@ export const handleError = (request: restify.Request, response: restify.Response
             break
         case 'ValidationError':
             error.statusCode = 400
+            const messages: any[] = []
+            
+            for(let name in error.errors) {
+                messages.push({message: error.erros[name].message})
+            }
+
+            error.toJSON = () => {
+                errors: messages
+            }
+
             break
     }
     done()
