@@ -49,6 +49,20 @@ class UsersRouter extends Router {
                     return next()
                 })
         })
+
+        application.patch('/users/:id', (request, response, next) => {
+            const options = {new: true}
+            User.findByIdAndUpdate(request.params.id, request.body, options)
+                .then(user => {
+                    if(user) {
+                        response.json(user)
+                        return next()
+                    }
+
+                    response.send(404)
+                    return next()
+                })
+        })
     }
 }
 
