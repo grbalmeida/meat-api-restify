@@ -1,7 +1,7 @@
 import * as restify from 'restify'
 import {Router} from '../common/router'
 import {User} from './users.model'
-import { NotFoundError } from 'restify-errors';
+import {NotFoundError} from 'restify-errors'
 
 class UsersRouter extends Router {
     constructor() {
@@ -32,7 +32,7 @@ class UsersRouter extends Router {
         })
 
         application.put('/users/:id', (request, response, next) => {
-            const options = {overwrite: true}
+            const options = {runValidators: true, overwrite: true}
             User.update({_id: request.params.id}, request.body, options)
                 .exec()
                 .then(result => {
@@ -48,7 +48,7 @@ class UsersRouter extends Router {
         })
 
         application.patch('/users/:id', (request, response, next) => {
-            const options = {new: true}
+            const options = {runValidators: true, new: true}
             User.findByIdAndUpdate(request.params.id, request.body, options)
                 .then(this.render(response, next))
                 .catch(next)
