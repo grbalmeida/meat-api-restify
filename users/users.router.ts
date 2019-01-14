@@ -12,7 +12,8 @@ class UsersRouter extends ModelRouter<User> {
 
     findByEmail = (request, response, next) => {
         if(request.query.email) {
-            User.find({email: request.query.email})
+            User.findByEmail(request.query.email)
+                .then(user => user ? [user] : [])
                 .then(this.renderAll(response, next))
                 .catch(next)
         } else {
