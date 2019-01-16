@@ -50,4 +50,9 @@ export class Server {
             .initializeDb()
             .then(() => this.initRoutes(routers).then(() => this))
     }
+
+    shutdown() {
+        return mongoose.disconnect()
+            .then(() => this.application.close())
+    }
 }
