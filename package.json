@@ -4,7 +4,7 @@
   "description": "Restaurants API",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "ts-node jest.startup.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,9 +19,11 @@
     "@types/restify-errors": "4.3.2",
     "@types/supertest": "^2.0.7",
     "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
     "nodemon": "^1.18.9",
     "supertest": "^3.3.0",
     "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   }
 }
